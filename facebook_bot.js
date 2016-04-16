@@ -81,6 +81,7 @@ if (!process.env.verify_token) {
 
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
+var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\nmath - Try some math quizzes.\nenglish - Try some english quizzes.";
 
 var controller = Botkit.facebookbot({
     debug: true,
@@ -188,6 +189,12 @@ controller.hears(['call me (.*)', 'my name is (.*)'], 'message_received', functi
             bot.reply(message, 'Got it. I will call you ' + user.name + ' from now on.');
         });
     });
+});
+
+controller.hears(['help', 'usage'], 'message_received', function(bot, message) {
+
+    bot.reply(message, usage);
+
 });
 
 controller.hears(['what is my name', 'who am i'], 'message_received', function(bot, message) {
