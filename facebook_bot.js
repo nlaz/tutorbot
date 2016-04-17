@@ -122,46 +122,24 @@ controller.hears(['structured'], 'message_received', function(bot, message) {
                 'template_type': 'generic',
                 'elements': [
                     {
-                        'title': 'Classic White T-Shirt',
-                        'image_url': 'http://petersapparel.parseapp.com/img/item100-thumb.png',
-                        'subtitle': 'Soft white cotton t-shirt is back in style',
+                        'title': 'AP Calculus Question 1',
+                        'image_url': '',
+                        'subtitle': 'Find f(g(-2)), given the above:',
                         'buttons': [
                             {
-                                'type': 'web_url',
-                                'url': 'https://petersapparel.parseapp.com/view_item?item_id=100',
-                                'title': 'View Item'
-                            },
-                            {
-                                'type': 'web_url',
-                                'url': 'https://petersapparel.parseapp.com/buy_item?item_id=100',
-                                'title': 'Buy Item'
+                                'type': 'postback',
+                                'title': 'A) 5/26',
+                                'payload': '5/26'
                             },
                             {
                                 'type': 'postback',
-                                'title': 'Bookmark Item',
-                                'payload': 'White T-Shirt'
-                            }
-                        ]
-                    },
-                    {
-                        'title': 'Classic Grey T-Shirt',
-                        'image_url': 'http://petersapparel.parseapp.com/img/item101-thumb.png',
-                        'subtitle': 'Soft gray cotton t-shirt is back in style',
-                        'buttons': [
-                            {
-                                'type': 'web_url',
-                                'url': 'https://petersapparel.parseapp.com/view_item?item_id=101',
-                                'title': 'View Item'
-                            },
-                            {
-                                'type': 'web_url',
-                                'url': 'https://petersapparel.parseapp.com/buy_item?item_id=101',
-                                'title': 'Buy Item'
+                                'title': 'B) 9/5',
+                                'payload': '9/5'
                             },
                             {
                                 'type': 'postback',
-                                'title': 'Bookmark Item',
-                                'payload': 'Grey T-Shirt'
+                                'title': 'C) 2',
+                                'payload': '2'
                             }
                         ]
                     }
