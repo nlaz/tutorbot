@@ -112,8 +112,41 @@ controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
     });
 });
 
+controller.hears(['quiz me'], 'message_received', function(bot, message) {
 
-controller.hears(['structured'], 'message_received', function(bot, message) {
+    bot.reply(message, {
+        attachment: {
+            'type': 'template',
+            'payload': {
+                'template_type': 'generic',
+                'elements': [
+                    {
+                        'title': 'Quiz Time! Select a category:',
+                        'buttons': [
+                            {
+                                'type': 'postback',
+                                'title': 'AB CALCULUS',
+                                'payload': 'Subject: AB CALCULUS'
+                            },
+                            {
+                                'type': 'postback',
+                                'title': 'BC CALCULUS',
+                                'payload': 'Subject: BC CALCULUS'
+                            },
+                            {
+                                'type': 'postback',
+                                'title': 'US. HISTORY',
+                                'payload': 'Subject: US. HISTORY'
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    });
+});
+
+var launchCalculusQuiz = function(message) {
 
     bot.reply(message, {
         attachment: {
@@ -129,17 +162,17 @@ controller.hears(['structured'], 'message_received', function(bot, message) {
                             {
                                 'type': 'postback',
                                 'title': 'A) 5/26',
-                                'payload': '5/26'
+                                'payload': 'Answer: 5/26'
                             },
                             {
                                 'type': 'postback',
                                 'title': 'B) 9/5',
-                                'payload': '9/5'
+                                'payload': 'Answer: 9/5'
                             },
                             {
                                 'type': 'postback',
                                 'title': 'C) 2',
-                                'payload': '2'
+                                'payload': 'Answer: 2'
                             }
                         ]
                     }
@@ -147,11 +180,29 @@ controller.hears(['structured'], 'message_received', function(bot, message) {
             }
         }
     });
-});
+}
 
 controller.on('facebook_postback', function(bot, message) {
-
-    bot.reply(message, 'Great Choice!!!! (' + message.payload + ')');
+    var answer = message.payload;
+    switch(answer){
+        case 'Subject: AB CALCULUS':
+            bot.reply(message, 'Starting AB Calculus quiz!');
+            launchCalculusQuiz(message);
+            break;
+        case 'Subject: BC CALCULUS':
+            bot.reply(message, 'No BC Calculus quizzes at the moment...');
+            break;
+        case 'Subject: US. HISTORY':
+            bot.reply(message, 'No US. History at the moment...');
+            break;
+        case (answer.match(/^Answer:/) || {}).input:
+            answer = answer.replace("Answer: ", "");
+            bot.reply(message, 'Is ' + answer + ' your final answer?');
+            break;
+        default:
+            bot.reply(message, 'Whoops! What happened?');
+            break;
+    }
 
 });
 
