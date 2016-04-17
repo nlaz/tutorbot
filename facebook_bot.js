@@ -67,6 +67,36 @@ This bot demonstrates many of the core features of Botkit:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+var QUESTIONS = {
+    calculus_ab: [
+        {
+            title: 'Solve for \'h\' above',
+            subtitle: 'Select the best answer below:',
+            image_path: 'images/calc_1.jpg',
+            options: ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'],
+            payloads: ['A=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ]
+        },
+        {
+            title: 'What is the slope of the tangent to the curve above at (2,1)?',
+            subtitle: 'Select the best answer below:',
+            image_path: 'images/calc_2.jpg',
+            options: ['-3/2', '-1', '-5/14', '-3/14', '0'],
+            payloads: ['N=> -3/2', 'N=> -1', 'A=> -5/14', 'N=> -3/14', 'N=> 0']
+        },
+        {
+            title: 'If f(x) = sin^2(3 - x), then f\'(0) =',
+            subtitle: 'Select the best answer below:',
+            options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cose(3)', '6sin(3)cos(3)'],
+            payloads: ['N=> -2cos(3)', 'A=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
+        }
+    ],
+    calculus_bc: {
+
+    },
+    us_history: {
+
+    }
+}
 
 if (!process.env.page_token) {
     console.log('Error: Specify page_token in environment');
@@ -426,22 +456,23 @@ function generateMath() {
 }
 
 function generateCalculusQuestion() {
-  var base_url = 'http://nlaz.xyz/quizbot/';
-  var title = 'Solve for \'h\' above',
-      subtitle = 'Select the best answer',
-      image_path = 'images/calc_1.jpg',
-      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'],
-      payloads = ['A=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ];
+  var base_url = 'http://nlaz.xyz/quizbot/',
+      calculus = QUESTIONS['calculus_ab'],
+      question = calculus[randomInt(0, calculus.length)];
+
+      console.log(question);
 
     return {
-        title: title,
-        image_url: base_url + image_path,
-        subtitle: subtitle,
-        options: options,
-        payloads: payloads
+        title: question['title'],
+        image_url: base_url + question['image_path'],
+        subtitle: question['subtitle'],
+        options: question['options'],
+        payloads: question['payloads']
     }
 }
 
 function randomInt(xmin,xmax) { 
     return Math.floor( Math.random() * (xmax + 1 - xmin) + xmin ); 
 }
+
+
