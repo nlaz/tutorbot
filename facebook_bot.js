@@ -90,7 +90,7 @@ var QUESTIONS = {
             title: 'Given the function f, then what is f\'(0)?',
             image_path: 'images/calc_3.jpg',
             subtitle: 'Select the best answer below:',
-            options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cose(3)', '6sin(3)cos(3)'],
+            options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cos(3)', '6sin(3)cos(3)'],
             payloads: ['N=> -2cos(3)', 'A=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
         },
         {
@@ -105,7 +105,7 @@ var QUESTIONS = {
             type: 'generic',
             title: 'The graph of a function f is shown above.',
             image_path: 'images/calc_5.jpg',
-            subtitle: 'If lim x->b f(x) exists and f is not continuous at b, b =',
+            subtitle: 'If lim x->b f(x) exists and f is not continuous at b, what is b?',
             options: ['-1', '0', '1', '2', '3'],
             payloads: ['N=> -1', 'A=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
         },
@@ -127,7 +127,7 @@ var QUESTIONS = {
         },
         {
             type: 'generic',
-            title: 'If f(0) = 1, then f(2) =',
+            title: 'If f(0) = 1, then what is f(2)?',
             image_path: 'images/calc_8.jpg',
             subtitle: 'Select the best answer below:',
             options: ['-1.819', '-0.843', '-0.819', '0.157', '1.157'],
@@ -201,7 +201,6 @@ controller.setupWebserver(process.env.port || 3000, function(err, webserver) {
 
 controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
 
-
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
             bot.reply(message, 'Hello ' + user.name + '!!');
@@ -258,6 +257,12 @@ var launchQuiz = function(message, question) {
             'payload': question['payloads'][i]
         });
     }
+
+    buttons.push({
+        'type': 'postback',
+        'title': 'I don\'t know.',
+        'payload': 'NO_CLUE'
+    });
 
     console.log(question['type'] + "  <!!!!!");
     var attachment_template = {
@@ -319,11 +324,24 @@ controller.on('facebook_postback', function(bot, message) {
             answer = answer.replace('N=> ', '');
             bot.reply(message, 'Not quite. Try again.');
             break;
+        case 'NO_CLUE':
+            bot.reply(message, 'No worries. We will come back to that one.');
+            break;
         default:
             bot.reply(message, 'Whoops! What happened?');
             break;
     }
 
+});
+
+controller.hears(['Calculus', 'calculus'], 'message_received', function(bot, message) {
+    bot.reply(message, 'Starting AB Calculus quiz!');
+    launchQuiz(message, generateCalculusQuestion());
+});
+
+controller.hears(['Human Geo', 'human geo', 'geo'], 'message_received', function(bot, message) {
+    bot.reply(message, 'Starting Human Geography quiz!');
+    launchQuiz(message, generateHumanGeoQuestion());
 });
 
 controller.hears(['call me (.*)', 'my name is (.*)'], 'message_received', function(bot, message) {
