@@ -205,21 +205,25 @@ controller.hears(['math'], 'message_received', function(bot, message) {
         console.log(math);
         if (math) {
             convo.ask(math['question'], function(response, convo) {
-              console.log(response.text + " =? " + math['answer']);
-              if (response.text == math['answer']) {
-                console.log("Correct answer");
-                convo.say('Nice!');
-                bot.reply(response,'Right!');
-              } else {
-                console.log("Wrong answer");
-                convo.say('Nope!');
-                bot.reply(response,'Wrong!');
+              var answer = math['answer'];
+              console.log(response.text + " =? " + answer);
+              console.log(response.text == answer);
+              switch(response.text) {
+                case String(answer):
+                  bot.reply(response,'Nice! That\'s right!');
+                  convo.stop();
+                  break;
+                case 'stop':
+                  bot.reply(response,'Ok. We can come back to that.');
+                  convo.stop();
+                  break;
+                default:
+                  bot.reply(response, 'Whoops! Try again or type \'stop\'.');
+                  break;
               }
-              convo.stop();
             });
         }
     }
-
     bot.startConversation(message, askMathQuestion);
 });
 
