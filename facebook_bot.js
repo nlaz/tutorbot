@@ -203,32 +203,24 @@ controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
             'type': 'template',
             'payload': { 
                 'template_type': 'generic',
-                'elements': {
+                'elements': [{
                     'title': 'HI! I\'m QuizBot! Nice to meet you!',
-                    'image_url': 'images/bot.jpg',
+                    'image_url': 'http://nlaz.xyz/quizbot/images/bot.jpg',
                     'subtitle': 'Select \'Usage\' to see what I can do or \'Quiz\' to get started.',
                     'buttons': [
                         {
                             'type': 'postback',
-                            'title': 'Usage',
+                            'title': 'View Usage',
                             'payload': 'OPTIONS_USAGE'
                         },
                         {
                             'type': 'postback',
-                            'title': 'Quiz',
+                            'title': 'Start Quiz',
                             'payload': 'OPTIONS_QUIZ'
                         }
                     ]
-                }
+                }]
             }
-        }
-    });
-
-    controller.storage.users.get(message.user, function(err, user) {
-        if (user && user.name) {
-            bot.reply(message, 'Hello ' + user.name + '!!');
-        } else {
-            bot.reply(message, 'Hello.');
         }
     });
 });
@@ -358,6 +350,7 @@ controller.on('facebook_postback', function(bot, message) {
     var answer = message.payload,
         subject;
     switch(answer){
+        case 'OPTIONS_QUIZ':
         case 'SUBJECT_AB_CALCULUS':
             bot.reply(message, 'Starting AB Calculus quiz!');
             message['subject'] = answer;
@@ -409,6 +402,9 @@ controller.on('facebook_postback', function(bot, message) {
             break;
         case 'OPTIONS_STOP':
             bot.reply(message, 'Nice! You got ' + numCorrect + ' out of ' + numQuestions + ' questions right!');
+            break;
+        case 'OPTIONS_USAGE':
+            bot.reply(message, usage);
             break;
         default:
             bot.reply(message, 'Whoops! What happened?');
