@@ -180,13 +180,9 @@ var launchCalculusQuiz = function(message, question) {
         attachment: {
             'type': 'template',
             'payload': {
-                'template_type': 'generic',
-                'elements': [
-                    {
-                        'title': 'Continued...',
-                        'buttons': buttons.slice(3)
-                    }
-                ]
+                'text': 'More options...',
+                'template_type': 'button',
+                'buttons': buttons.slice(3)
             }
         }
     });
@@ -431,7 +427,7 @@ function generateCalculusQuestion() {
       subtitle = 'Select the best answer',
       image_path = 'images/calc_1.jpg',
       answer = '1',
-      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does not exist.'];
+      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'];
 
     return {
         title: title,
