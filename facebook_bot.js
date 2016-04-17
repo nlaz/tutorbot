@@ -122,9 +122,9 @@ controller.hears(['structured'], 'message_received', function(bot, message) {
                 'template_type': 'generic',
                 'elements': [
                     {
-                        'title': 'AP Calculus Question 1',
-                        'image_url': '',
-                        'subtitle': 'Find f(g(-2)), given the above:',
+                        'title': 'Given the equation above, find f(g(-2)):',
+                        'image_url': 'http://nlaz.xyz/quizbot/images/calc.jpg',
+                        'subtitle': 'Select the best answer.',
                         'buttons': [
                             {
                                 'type': 'postback',
