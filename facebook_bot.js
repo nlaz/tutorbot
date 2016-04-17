@@ -104,7 +104,7 @@ var QUESTIONS = {
             payloads: ['N=> -1', 'A=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
         },
         {
-            title: 'What is the rate of change of the function f given above.',
+            title: 'Given the function f given above.',
             image_path: 'images/calc_6.jpg',
             subtitle: 'Find the average rate of change on the closed interval [0,3].',
             options: ['8.5', '8.7', '22', '33', '66'],
@@ -496,6 +496,7 @@ function generateCalculusQuestion() {
       question = calculus[randomInt(0, calculus.length)];
 
       console.log(question);
+      shuffle(question['options'], question['payloads']);
 
     return {
         title: question['title'],
@@ -510,4 +511,18 @@ function randomInt(xmin,xmax) {
     return Math.floor( Math.random() * (xmax + 1 - xmin) + xmin ); 
 }
 
+function shuffle(obj1, obj2) {
+    var l = obj1.length,
+        i = 0, rnd, tmp1, tmp2;
 
+    while (i < l) {
+        rnd = Math.floor(Math.random() * i);
+        tmp1 = obj1[i];
+        tmp2 = obj2[i];
+        obj1[i] = obj1[rnd];
+        obj2[i] = obj2[rnd];
+        obj1[rnd] = tmp1;
+        obj2[rnd] = tmp2;
+        i += 1;
+    }
+}
