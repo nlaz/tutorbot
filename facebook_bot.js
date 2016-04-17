@@ -82,6 +82,7 @@ if (!process.env.verify_token) {
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
 var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\nmath - Try some math quizzes.\nenglish - Try some english quizzes.";
+var difficulty = 'EASY';
 
 var controller = Botkit.facebookbot({
     debug: true,
@@ -195,6 +196,31 @@ controller.hears(['help', 'usage'], 'message_received', function(bot, message) {
 
     bot.reply(message, usage);
 
+});
+
+controller.hears(['math'], 'message_received', function(bot, message) {
+    questionCount = 0;
+    askMathQuestion = function(response, convo) {
+        var math = generateMath();
+        console.log(math);
+        if (math) {
+            convo.ask(math['question'], function(response, convo) {
+              console.log(response.text + " =? " + math['answer']);
+              if (response.text == math['answer']) {
+                console.log("Correct answer");
+                convo.say('Nice!');
+                bot.reply(response,'Right!');
+              } else {
+                console.log("Wrong answer");
+                convo.say('Nope!');
+                bot.reply(response,'Wrong!');
+              }
+              convo.stop();
+            });
+        }
+    }
+
+    bot.startConversation(message, askMathQuestion);
 });
 
 controller.hears(['what is my name', 'who am i'], 'message_received', function(bot, message) {
@@ -327,4 +353,35 @@ function formatUptime(uptime) {
 
     uptime = uptime + ' ' + unit;
     return uptime;
+}
+
+function generateMath() {
+    var ops = ['/','*','-','+'],
+        DIFFLIM = 12,
+        left, right, operator, equation;
+    switch (difficulty) {
+        case 'EASY':
+          DIFFLIM = 12;
+          break;
+        case 'HARD':
+          DIFFLIM = 24;
+          break;
+        default:
+          console.log("Oy vey");
+          return;
+    }
+
+    left = randomInt(0, DIFFLIM);
+    right = randomInt(0, DIFFLIM);
+    operator = ops[randomInt(0, ops.length)];
+    equation = left + operator + right;
+    console.log(equation);
+    return {
+        question: equation + "= ?",
+        answer: eval(equation)
+    }
+}
+
+function randomInt(xmin,xmax) { 
+    return Math.floor( Math.random() * (xmax + 1 - xmin) + xmin ); 
 }
