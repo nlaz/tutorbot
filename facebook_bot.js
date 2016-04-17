@@ -70,6 +70,7 @@ This bot demonstrates many of the core features of Botkit:
 var QUESTIONS = {
     calculus_ab: [
         {
+            type: 'generic',
             title: 'Solve for \'h\' above',
             subtitle: 'Select the best answer below:',
             image_path: 'images/calc_1.jpg',
@@ -77,6 +78,7 @@ var QUESTIONS = {
             payloads: ['A=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ]
         },
         {
+            type: 'generic',
             title: 'What is the slope of the tangent to the curve above at (2,1)?',
             subtitle: 'Select the best answer below:',
             image_path: 'images/calc_2.jpg',
@@ -84,12 +86,15 @@ var QUESTIONS = {
             payloads: ['N=> -3/2', 'N=> -1', 'A=> -5/14', 'N=> -3/14', 'N=> 0']
         },
         {
-            title: 'If f(x) = sin^2(3 - x), then f\'(0) =',
+            type: 'generic',
+            title: 'Given the function f, then what is f\'(0)?',
+            image_path: 'images/calc_3.jpg',
             subtitle: 'Select the best answer below:',
             options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cose(3)', '6sin(3)cos(3)'],
             payloads: ['N=> -2cos(3)', 'A=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
         },
         {
+            type: 'generic',
             title: 'What is the area of the shaded region?',
             image_path: 'images/calc_4.jpg',
             subtitle: 'The graph above shows the area of y = 5x - x^2 and the line of y = 2x. Select the best answer below:',
@@ -97,6 +102,7 @@ var QUESTIONS = {
             payloads: ['N=> 25/6', 'A=> 9/2', 'N=> 9', 'N=> 27/2', 'N=> 45/2']
         },
         {
+            type: 'generic',
             title: 'The graph of a function f is shown above.',
             image_path: 'images/calc_5.jpg',
             subtitle: 'If lim x->b f(x) exists and f is not continuous at b, b =',
@@ -104,6 +110,7 @@ var QUESTIONS = {
             payloads: ['N=> -1', 'A=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
         },
         {
+            type: 'generic',
             title: 'Given the function f given above.',
             image_path: 'images/calc_6.jpg',
             subtitle: 'Find the average rate of change on the closed interval [0,3].',
@@ -111,6 +118,7 @@ var QUESTIONS = {
             payloads: ['N=> 8.5', 'N=> 8.7', 'A=> 22', 'N=> 33', 'N=> 66']
         },
         {
+            type: 'generic',
             title: 'Solve the equation above.',
             image_path: 'images/calc_7.jpg',
             subtitle: 'Select the best answer below:',
@@ -118,6 +126,7 @@ var QUESTIONS = {
             payloads: ['N=> -2', 'A=> -1/4', 'N=> 1/2', 'N=> 1', 'N=> The limit doesn\'t exist']
         },
         {
+            type: 'generic',
             title: 'If f(0) = 1, then f(2) =',
             image_path: 'images/calc_8.jpg',
             subtitle: 'Select the best answer below:',
@@ -125,12 +134,34 @@ var QUESTIONS = {
             payloads: ['N=> -1.819', 'N=> -0.843', 'N=> -0.819', 'N=> 0.157', 'A=> 1.157']
         }
     ],
-    calculus_bc: {
-
-    },
-    us_history: {
-
-    }
+    human_geo: [
+        {
+            type: 'button',
+            text: 'Which of the following regions has little dairying in its traditional agriculture?',
+            options: ['Eastern Europe', 'Western Europe', 'South Asia', 'East Asia', 'North America'],
+            payloads: ['N=> Eastern Europe', 'N=> Western Europe', 'N=> South Asia', 'A=> East Asia', 'N=> North America']
+        }, 
+        {   
+            type: 'generic',
+            title: 'Use the map above to answer: ',
+            image_path: 'images/geo_2.jpg',
+            subtitle: 'Which one of the boxes is in an area with high population density and low economic development?',
+            options: ['A', 'B', 'C', 'D', 'E'],
+            payloads: ['N=> A', 'N=> B', 'A=> C', 'N=> D', 'N=> E']
+        },
+        {
+            type: 'button',
+            text: 'Which of the following is a subsistence crop?',
+            options: ['Corn', 'Cotton', 'Rubber', 'Cocoa', 'Timber'],
+            payloads: ['A=> Corn', 'N=> Cotton', 'N=> Rubber', 'N=> Cocoa', 'N=> Timber']
+        },
+        {
+            type: 'button',
+            text: 'Which of the following originated in South Asia and subsequently spread throughout much of Southeast and East Asia?',
+            options: ['Hinduism', 'Christianity', 'Buddhism', 'Sikhism', 'Confucianism'],
+            payloads: ['N=> Hinduism', 'N=> Christianity', 'A=> Buddhism', 'N=> Sikhism', 'N=> Confucianism']
+        }
+    ]
 }
 
 if (!process.env.page_token) {
@@ -183,27 +214,23 @@ controller.hears(['quiz me'], 'message_received', function(bot, message) {
         attachment: {
             'type': 'template',
             'payload': {
-                'template_type': 'generic',
-                'elements': [
+                'template_type': 'button',
+                'text': 'Quiz Time! Select a category:',
+                'buttons': [
                     {
-                        'title': 'Quiz Time! Select a category:',
-                        'buttons': [
-                            {
-                                'type': 'postback',
-                                'title': 'AB CALCULUS',
-                                'payload': 'Subject: AB CALCULUS'
-                            },
-                            {
-                                'type': 'postback',
-                                'title': 'BC CALCULUS',
-                                'payload': 'Subject: BC CALCULUS'
-                            },
-                            {
-                                'type': 'postback',
-                                'title': 'US. HISTORY',
-                                'payload': 'Subject: US. HISTORY'
-                            }
-                        ]
+                        'type': 'postback',
+                        'title': 'AB CALCULUS',
+                        'payload': 'Subject: AB CALCULUS'
+                    },
+                    {
+                        'type': 'postback',
+                        'title': 'HUMAN GEO',
+                        'payload': 'Subject: HUMAN GEO'
+                    },
+                    {
+                        'type': 'postback',
+                        'title': 'US. HISTORY',
+                        'payload': 'Subject: US. HISTORY'
                     }
                 ]
             }
@@ -211,7 +238,7 @@ controller.hears(['quiz me'], 'message_received', function(bot, message) {
     });
 });
 
-var launchCalculusQuiz = function(message, question) {
+var launchQuiz = function(message, question) {
 
     var buttons = [];
 
@@ -223,22 +250,30 @@ var launchCalculusQuiz = function(message, question) {
         });
     }
 
-    bot.reply(message, {
-        attachment: {
+    console.log(question['type'] + "  <!!!!!");
+    var attachment_template = {
+        'attachment': {
             'type': 'template',
-            'payload': {
-                'template_type': 'generic',
-                'elements': [
-                    {
-                        'title': question['title'],
-                        'image_url': question['image_url'],
-                        'subtitle': question['subtitle'],
-                        'buttons': buttons.slice(0,3)
-                    }
-                ]
-            }
+            'payload': { 'template_type': question['type'] }
         }
-    });
+    };
+
+    if (question['type'] == 'button') {
+        attachment_template['attachment']['payload']['buttons'] = buttons.slice(0,3);
+        attachment_template['attachment']['payload']['text'] = question['text'];
+    } else if (question['type'] == 'generic') {
+        attachment_template['attachment']['payload']['elements'] = [
+            {
+                'title': question['title'],
+                'image_url': question['image_url'],
+                'subtitle': question['subtitle'],
+                'buttons': buttons.slice(0,3)
+            }
+        ]
+    }
+
+    console.log(attachment_template);
+    bot.reply(message, attachment_template);
 
     // Overflow Options
     setTimeout( function(){ bot.reply(message, {
@@ -258,10 +293,11 @@ controller.on('facebook_postback', function(bot, message) {
     switch(answer){
         case 'Subject: AB CALCULUS':
             bot.reply(message, 'Starting AB Calculus quiz!');
-            launchCalculusQuiz(message, generateCalculusQuestion());
+            launchQuiz(message, generateCalculusQuestion());
             break;
-        case 'Subject: BC CALCULUS':
-            bot.reply(message, 'No BC Calculus quizzes at the moment...');
+        case 'Subject: HUMAN GEO':
+            bot.reply(message, 'Starting Human Geography quiz!');
+            launchQuiz(message, generateHumanGeoQuestion());
             break;
         case 'Subject: US. HISTORY':
             bot.reply(message, 'No US. History at the moment...');
@@ -435,9 +471,7 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
         bot.reply(message,
             ':robot_face: I am a bot named <@' + bot.identity.name +
              '>. I have been running for ' + uptime + ' on ' + hostname + '.');
-    });
-
-
+});
 
 controller.on('message_received', function(bot, message) {
     bot.reply(message, 'Try: `what is my name` or `structured` or `call me captain`');
@@ -490,15 +524,24 @@ function generateMath() {
     }
 }
 
+function generateHumanGeoQuestion() {
+  return generateQuestion('human_geo');
+}
+
 function generateCalculusQuestion() {
+  return generateQuestion('calculus_ab');
+}
+
+function generateQuestion(subject) {
   var base_url = 'http://nlaz.xyz/quizbot/',
-      calculus = QUESTIONS['calculus_ab'],
-      question = calculus[randomInt(0, calculus.length)];
+      qset = QUESTIONS[subject],
+      question = qset[randomInt(0, qset.length)];
 
       console.log(question);
       shuffle(question['options'], question['payloads']);
 
     return {
+        type: question['type'],
         title: question['title'],
         image_url: base_url + question['image_path'],
         subtitle: question['subtitle'],
