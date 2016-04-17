@@ -375,8 +375,8 @@ function generateMath() {
           return;
     }
 
-    left = randomInt(0, DIFFLIM);
-    right = randomInt(0, DIFFLIM);
+    left = randomInt(1, DIFFLIM);
+    right = randomInt(1, DIFFLIM);
     operator = ops[randomInt(0, ops.length)];
     equation = left + operator + right;
     console.log(equation);
