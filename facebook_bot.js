@@ -75,15 +75,15 @@ var QUESTIONS = {
             subtitle: 'Select the best answer below:',
             image_path: 'images/calc_1.jpg',
             options: ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'],
-            payloads: ['A=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ]
+            payloads: ['A=>CALC=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ]
         },
         {
             type: 'generic',
-            title: 'What is the slope of the tangent to the curve above at (2,1)?',
-            subtitle: 'Select the best answer below:',
+            title: 'Select the best answer below:',
+            subtitle: 'What is the slope of the tangent to the curve above at (2,1)?',
             image_path: 'images/calc_2.jpg',
             options: ['-3/2', '-1', '-5/14', '-3/14', '0'],
-            payloads: ['N=> -3/2', 'N=> -1', 'A=> -5/14', 'N=> -3/14', 'N=> 0']
+            payloads: ['N=> -3/2', 'N=> -1', 'A=>CALC=> -5/14', 'N=> -3/14', 'N=> 0']
         },
         {
             type: 'generic',
@@ -91,7 +91,7 @@ var QUESTIONS = {
             image_path: 'images/calc_3.jpg',
             subtitle: 'Select the best answer below:',
             options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cos(3)', '6sin(3)cos(3)'],
-            payloads: ['N=> -2cos(3)', 'A=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
+            payloads: ['N=> -2cos(3)', 'A=>CALC=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
         },
         {
             type: 'generic',
@@ -99,7 +99,7 @@ var QUESTIONS = {
             image_path: 'images/calc_4.jpg',
             subtitle: 'The graph above shows the area of y = 5x - x^2 and the line of y = 2x. Select the best answer below:',
             options: ['25/6', '9/2', '9', '27/2', '45/2'],
-            payloads: ['N=> 25/6', 'A=> 9/2', 'N=> 9', 'N=> 27/2', 'N=> 45/2']
+            payloads: ['N=> 25/6', 'A=>CALC=> 9/2', 'N=> 9', 'N=> 27/2', 'N=> 45/2']
         },
         {
             type: 'generic',
@@ -107,7 +107,7 @@ var QUESTIONS = {
             image_path: 'images/calc_5.jpg',
             subtitle: 'If lim x->b f(x) exists and f is not continuous at b, what is b?',
             options: ['-1', '0', '1', '2', '3'],
-            payloads: ['N=> -1', 'A=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
+            payloads: ['N=> -1', 'A=>CALC=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
         },
         {
             type: 'generic',
@@ -115,7 +115,7 @@ var QUESTIONS = {
             image_path: 'images/calc_6.jpg',
             subtitle: 'Find the average rate of change on the closed interval [0,3].',
             options: ['8.5', '8.7', '22', '33', '66'],
-            payloads: ['N=> 8.5', 'N=> 8.7', 'A=> 22', 'N=> 33', 'N=> 66']
+            payloads: ['N=> 8.5', 'N=> 8.7', 'A=>CALC=> 22', 'N=> 33', 'N=> 66']
         },
         {
             type: 'generic',
@@ -123,7 +123,7 @@ var QUESTIONS = {
             image_path: 'images/calc_7.jpg',
             subtitle: 'Select the best answer below:',
             options: ['-2', '-1/4', '1/2', '1', 'The limit doesn\'t exist'],
-            payloads: ['N=> -2', 'A=> -1/4', 'N=> 1/2', 'N=> 1', 'N=> The limit doesn\'t exist']
+            payloads: ['N=> -2', 'A=>CALC=> -1/4', 'N=> 1/2', 'N=> 1', 'N=> The limit doesn\'t exist']
         },
         {
             type: 'generic',
@@ -131,7 +131,7 @@ var QUESTIONS = {
             image_path: 'images/calc_8.jpg',
             subtitle: 'Select the best answer below:',
             options: ['-1.819', '-0.843', '-0.819', '0.157', '1.157'],
-            payloads: ['N=> -1.819', 'N=> -0.843', 'N=> -0.819', 'N=> 0.157', 'A=> 1.157']
+            payloads: ['N=> -1.819', 'N=> -0.843', 'N=> -0.819', 'N=> 0.157', 'A=>CALC=> 1.157']
         }
     ],
     human_geo: [
@@ -139,7 +139,7 @@ var QUESTIONS = {
             type: 'button',
             text: 'Which of the following regions has little dairying in its traditional agriculture?',
             options: ['Eastern Europe', 'Western Europe', 'South Asia', 'East Asia', 'North America'],
-            payloads: ['N=> Eastern Europe', 'N=> Western Europe', 'N=> South Asia', 'A=> East Asia', 'N=> North America']
+            payloads: ['N=> Eastern Europe', 'N=> Western Europe', 'N=> South Asia', 'A=>GEO=> East Asia', 'N=> North America']
         }, 
         {   
             type: 'generic',
@@ -147,19 +147,19 @@ var QUESTIONS = {
             image_path: 'images/geo_2.jpg',
             subtitle: 'Which one of the boxes is in an area with high population density and low economic development?',
             options: ['A', 'B', 'C', 'D', 'E'],
-            payloads: ['N=> A', 'N=> B', 'A=> C', 'N=> D', 'N=> E']
+            payloads: ['N=> A', 'N=> B', 'A=>GEO=> C', 'N=> D', 'N=> E']
         },
         {
             type: 'button',
             text: 'Which of the following is a subsistence crop?',
             options: ['Corn', 'Cotton', 'Rubber', 'Cocoa', 'Timber'],
-            payloads: ['A=> Corn', 'N=> Cotton', 'N=> Rubber', 'N=> Cocoa', 'N=> Timber']
+            payloads: ['A=>GEO=> Corn', 'N=> Cotton', 'N=> Rubber', 'N=> Cocoa', 'N=> Timber']
         },
         {
             type: 'button',
             text: 'Which of the following originated in South Asia and subsequently spread throughout much of Southeast and East Asia?',
             options: ['Hinduism', 'Christianity', 'Buddhism', 'Sikhism', 'Confucianism'],
-            payloads: ['N=> Hinduism', 'N=> Christianity', 'A=> Buddhism', 'N=> Sikhism', 'N=> Confucianism']
+            payloads: ['N=> Hinduism', 'N=> Christianity', 'A=>GEO=> Buddhism', 'N=> Sikhism', 'N=> Confucianism']
         }
     ]
 }
@@ -228,17 +228,17 @@ controller.hears(['quiz me', 'Quiz', 'Quiz me'], 'message_received', function(bo
                     {
                         'type': 'postback',
                         'title': 'AB Calculus',
-                        'payload': 'Subject: AB CALCULUS'
+                        'payload': 'SUBJECT_AB_CALCULUS'
                     },
                     {
                         'type': 'postback',
                         'title': 'Human Geo',
-                        'payload': 'Subject: HUMAN GEO'
+                        'payload': 'SUBJECT_HUMAN_GEO'
                     },
                     {
                         'type': 'postback',
                         'title': 'US. History',
-                        'payload': 'Subject: US. HISTORY'
+                        'payload': 'SUBJECT_US_HISTORY'
                     }
                 ]
             }
@@ -302,23 +302,62 @@ var launchQuiz = function(message, question) {
     } )}, 300);
 }
 
+var nextQuestion = function(message, subject) {
+    var buttons = [
+        {
+            'type': 'postback',
+            'title': 'Next One',
+            'payload': 'OPTIONS_NEXT_' + subject,
+        },
+        {
+            'type': 'postback',
+            'title': 'Stop',
+            'payload': 'OPTIONS_STOP',
+        }
+    ];
+
+    setTimeout( function(){ bot.reply(message, {
+        attachment: {
+            'type': 'template',
+            'payload': {
+                'text': ' ',
+                'template_type': 'button',
+                'buttons': buttons
+            }
+        }
+    } )}, 1000);
+}
+
 controller.on('facebook_postback', function(bot, message) {
-    var answer = message.payload;
+    var answer = message.payload,
+        subject;
     switch(answer){
-        case 'Subject: AB CALCULUS':
+        case 'SUBJECT_AB_CALCULUS':
             bot.reply(message, 'Starting AB Calculus quiz!');
+            message['subject'] = answer;
             launchQuiz(message, generateCalculusQuestion());
             break;
-        case 'Subject: HUMAN GEO':
+        case 'SUBJECT_HUMAN_GEO':
             bot.reply(message, 'Starting Human Geography quiz!');
+            message['subject'] = answer;
+            console.log(message);
             launchQuiz(message, generateHumanGeoQuestion());
             break;
-        case 'Subject: US. HISTORY':
+        case 'SUBJECT_US_HISTORY':
+            message['subject'] = answer;
             bot.reply(message, 'No US. History at the moment...');
             break;
-        case (answer.match(/^A=> /) || {}).input:
-            answer = answer.replace('A=> ', '');
+        case (answer.match(/^A=>/) || {}).input:
+            answer = answer.replace('A=>', '');
+            if (answer.includes('GEO=>')) {
+                answer = answer.replace('GEO=> ', '');
+                subject = 'SUBJECT_HUMAN_GEO';
+            } else if (answer.includes('CALC=>')) {
+                answer = answer.replace('CALC=> ', '');
+                subject = 'SUBJECT_AB_CALCULUS';
+            }
             bot.reply(message, 'That\'s right! ' + answer + ' is the answer.');
+            nextQuestion(message, subject );
             break;
         case (answer.match(/^N=> /) || {}).input:
             answer = answer.replace('N=> ', '');
@@ -326,6 +365,17 @@ controller.on('facebook_postback', function(bot, message) {
             break;
         case 'NO_CLUE':
             bot.reply(message, 'No worries. We will come back to that one.');
+            nextQuestion(message);
+            break;
+        case 'OPTIONS_NEXT_SUBJECT_AB_CALCULUS':
+            bot.reply(message, 'Here\'s another one...');
+            launchQuiz(message, generateCalculusQuestion());
+        case 'OPTIONS_NEXT_SUBJECT_HUMAN_GEO':
+            bot.reply(message, 'Here\'s another one...');
+            launchQuiz(message, generateHumanGeoQuestion());
+            break;
+        case 'OPTIONS_STOP':
+            bot.reply(message, 'Here\'s how you did:');
             break;
         default:
             bot.reply(message, 'Whoops! What happened?');
@@ -560,8 +610,8 @@ function generateCalculusQuestion() {
 
 function generateQuestion(subject) {
   var base_url = 'http://nlaz.xyz/quizbot/',
-      qset = QUESTIONS[subject],
-      question = qset[randomInt(0, qset.length)];
+      topic = QUESTIONS[subject],
+      question = topic[Math.floor(Math.random()*topic.length)];
 
       console.log(question);
       shuffle(question['options'], question['payloads']);
