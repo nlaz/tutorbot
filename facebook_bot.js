@@ -154,7 +154,7 @@ var launchCalculusQuiz = function(message, question) {
         buttons.push({
             'type': 'postback',
             'title': question['options'][i],
-            'payload': 'Answer: ' + question['options'][i]
+            'payload': question['payloads'][i]
         });
     }
 
@@ -201,9 +201,13 @@ controller.on('facebook_postback', function(bot, message) {
         case 'Subject: US. HISTORY':
             bot.reply(message, 'No US. History at the moment...');
             break;
-        case (answer.match(/^Answer:/) || {}).input:
-            answer = answer.replace("Answer: ", "");
-            bot.reply(message, 'Is ' + answer + ' your final answer?');
+        case (answer.match(/^A=> /) || {}).input:
+            answer = answer.replace('A=> ', '');
+            bot.reply(message, 'That\'s right! ' + answer + ' is the answer.');
+            break;
+        case (answer.match(/^N=> /) || {}).input:
+            answer = answer.replace('N=> ', '');
+            bot.reply(message, 'Not quite. Try again.');
             break;
         default:
             bot.reply(message, 'Whoops! What happened?');
@@ -426,15 +430,15 @@ function generateCalculusQuestion() {
   var title = 'Solve for \'h\' above',
       subtitle = 'Select the best answer',
       image_path = 'images/calc_1.jpg',
-      answer = '1',
-      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'];
+      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'],
+      payloads = ['A=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ];
 
     return {
         title: title,
         image_url: base_url + image_path,
         subtitle: subtitle,
-        answer: answer,
-        options: options
+        options: options,
+        payloads: payloads
     }
 }
 
