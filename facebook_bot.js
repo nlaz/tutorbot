@@ -179,6 +179,9 @@ var Botkit = require('./lib/Botkit.js');
 var os = require('os');
 var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\nmath - Try some math quizzes.\nenglish - Try some english quizzes.";
 var difficulty = 'EASY';
+var numQuestions = 0;
+var numMissed = 0;
+var numCorrect = 0;
 
 var controller = Botkit.facebookbot({
     debug: true,
@@ -208,7 +211,13 @@ controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
     });
 });
 
-controller.hears(['quiz me'], 'message_received', function(bot, message) {
+controller.hears(['stats', 'Stats'], 'message_received', function(bot, message) {
+
+  bot.reply(message, 'Here are your stats:\n Accuracy - 90%\nTotal Questions - 20\nYour best topic - Human Geo');
+
+});
+
+controller.hears(['quiz me', 'Quiz', 'Quiz me'], 'message_received', function(bot, message) {
 
     bot.reply(message, {
         attachment: {
@@ -219,17 +228,17 @@ controller.hears(['quiz me'], 'message_received', function(bot, message) {
                 'buttons': [
                     {
                         'type': 'postback',
-                        'title': 'AB CALCULUS',
+                        'title': 'AB Calculus',
                         'payload': 'Subject: AB CALCULUS'
                     },
                     {
                         'type': 'postback',
-                        'title': 'HUMAN GEO',
+                        'title': 'Human Geo',
                         'payload': 'Subject: HUMAN GEO'
                     },
                     {
                         'type': 'postback',
-                        'title': 'US. HISTORY',
+                        'title': 'US. History',
                         'payload': 'Subject: US. HISTORY'
                     }
                 ]
@@ -280,7 +289,7 @@ var launchQuiz = function(message, question) {
         attachment: {
             'type': 'template',
             'payload': {
-                'text': 'more options...',
+                'text': ' ',
                 'template_type': 'button',
                 'buttons': buttons.slice(3)
             }
@@ -339,7 +348,6 @@ controller.hears(['help', 'usage'], 'message_received', function(bot, message) {
 });
 
 controller.hears(['math'], 'message_received', function(bot, message) {
-    questionCount = 0;
     askMathQuestion = function(response, convo) {
         var math = generateMath();
         console.log(math);
@@ -542,6 +550,7 @@ function generateQuestion(subject) {
 
     return {
         type: question['type'],
+        text: question['text'],
         title: question['title'],
         image_url: base_url + question['image_path'],
         subtitle: question['subtitle'],
