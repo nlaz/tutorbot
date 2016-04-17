@@ -88,6 +88,41 @@ var QUESTIONS = {
             subtitle: 'Select the best answer below:',
             options: ['-2cos(3)', '-2sin(3)cos(3)', '6cos(3)', '2sin(3)cose(3)', '6sin(3)cos(3)'],
             payloads: ['N=> -2cos(3)', 'A=> -2sin(3)cos(3)', 'N=> 6cos(3)', 'N=> 2sin(3)cose(3)', 'N=> 6sin(3)cos(3)']
+        },
+        {
+            title: 'What is the area of the shaded region?',
+            image_path: 'images/calc_4.jpg',
+            subtitle: 'The graph above shows the area of y = 5x - x^2 and the line of y = 2x. Select the best answer below:',
+            options: ['25/6', '9/2', '9', '27/2', '45/2'],
+            payloads: ['N=> 25/6', 'A=> 9/2', 'N=> 9', 'N=> 27/2', 'N=> 45/2']
+        },
+        {
+            title: 'The graph of a function f is shown above.',
+            image_path: 'images/calc_5.jpg',
+            subtitle: 'If lim x->b f(x) exists and f is not continuous at b, b =',
+            options: ['-1', '0', '1', '2', '3'],
+            payloads: ['N=> -1', 'A=> 0', 'N=> 1', 'N=> 2', 'N=> 3']
+        },
+        {
+            title: 'What is the rate of change of the function f given above.',
+            image_path: 'images/calc_6.jpg',
+            subtitle: 'Find the average rate of change on the closed interval [0,3].',
+            options: ['8.5', '8.7', '22', '33', '66'],
+            payloads: ['N=> 8.5', 'N=> 8.7', 'A=> 22', 'N=> 33', 'N=> 66']
+        },
+        {
+            title: 'Solve the equation above.',
+            image_path: 'images/calc_7.jpg',
+            subtitle: 'Select the best answer below:',
+            options: ['-2', '-1/4', '1/2', '1', 'The limit doesn\'t exist'],
+            payloads: ['N=> -2', 'A=> -1/4', 'N=> 1/2', 'N=> 1', 'N=> The limit doesn\'t exist']
+        },
+        {
+            title: 'If f(0) = 1, then f(2) =',
+            image_path: 'images/calc_8.jpg',
+            subtitle: 'Select the best answer below:',
+            options: ['-1.819', '-0.843', '-0.819', '0.157', '1.157'],
+            payloads: ['N=> -1.819', 'N=> -0.843', 'N=> -0.819', 'N=> 0.157', 'A=> 1.157']
         }
     ],
     calculus_bc: {
