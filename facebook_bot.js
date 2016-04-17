@@ -198,6 +198,32 @@ controller.setupWebserver(process.env.port || 3000, function(err, webserver) {
 
 controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
 
+    bot.reply(message, {
+        'attachment': {
+            'type': 'template',
+            'payload': { 
+                'template_type': 'generic',
+                'elements': {
+                    'title': 'HI! I\'m QuizBot! Nice to meet you!',
+                    'image_url': 'images/bot.jpg',
+                    'subtitle': 'Select \'Usage\' to see what I can do or \'Quiz\' to get started.',
+                    'buttons': [
+                        {
+                            'type': 'postback',
+                            'title': 'Usage',
+                            'payload': 'OPTIONS_USAGE'
+                        },
+                        {
+                            'type': 'postback',
+                            'title': 'Quiz',
+                            'payload': 'OPTIONS_QUIZ'
+                        }
+                    ]
+                }
+            }
+        }
+    });
+
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
             bot.reply(message, 'Hello ' + user.name + '!!');
@@ -261,7 +287,6 @@ var launchQuiz = function(message, question) {
         'payload': 'NO_CLUE'
     });
 
-    console.log(question['type'] + "  <!!!!!");
     var attachment_template = {
         'attachment': {
             'type': 'template',
