@@ -146,7 +146,17 @@ controller.hears(['quiz me'], 'message_received', function(bot, message) {
     });
 });
 
-var launchCalculusQuiz = function(message) {
+var launchCalculusQuiz = function(message, question) {
+
+    var buttons = [];
+
+    for (var i = 0; i < question.options.length; i++) {
+        buttons.push({
+            'type': 'postback',
+            'title': question['options'][i],
+            'payload': 'Answer: ' + question['options'][i]
+        });
+    }
 
     bot.reply(message, {
         attachment: {
@@ -155,26 +165,26 @@ var launchCalculusQuiz = function(message) {
                 'template_type': 'generic',
                 'elements': [
                     {
-                        'title': 'Given the equation above, find f(g(-2)):',
-                        'image_url': 'http://nlaz.xyz/quizbot/images/calc.jpg',
-                        'subtitle': 'Select the best answer.',
-                        'buttons': [
-                            {
-                                'type': 'postback',
-                                'title': 'A) 5/26',
-                                'payload': 'Answer: 5/26'
-                            },
-                            {
-                                'type': 'postback',
-                                'title': 'B) 9/5',
-                                'payload': 'Answer: 9/5'
-                            },
-                            {
-                                'type': 'postback',
-                                'title': 'C) 2',
-                                'payload': 'Answer: 2'
-                            }
-                        ]
+                        'title': question['title'],
+                        'image_url': question['image_url'],
+                        'subtitle': question['subtitle'],
+                        'buttons': buttons.slice(0,3)
+                    }
+                ]
+            }
+        }
+    });
+
+    // Overflow Options
+    bot.reply(message, {
+        attachment: {
+            'type': 'template',
+            'payload': {
+                'template_type': 'generic',
+                'elements': [
+                    {
+                        'title': 'Continued...',
+                        'buttons': buttons.slice(3)
                     }
                 ]
             }
@@ -187,7 +197,7 @@ controller.on('facebook_postback', function(bot, message) {
     switch(answer){
         case 'Subject: AB CALCULUS':
             bot.reply(message, 'Starting AB Calculus quiz!');
-            launchCalculusQuiz(message);
+            launchCalculusQuiz(message, generateCalculusQuestion());
             break;
         case 'Subject: BC CALCULUS':
             bot.reply(message, 'No BC Calculus quizzes at the moment...');
@@ -412,6 +422,23 @@ function generateMath() {
     return {
         question: equation + "= ?",
         answer: eval(equation)
+    }
+}
+
+function generateCalculusQuestion() {
+  var base_url = 'http://nlaz.xyz/quizbot/';
+  var title = 'Solve for \'h\' above',
+      subtitle = 'Select the best answer',
+      image_path = 'images/calc_1.jpg',
+      answer = '1',
+      options = ['1', 'sqrt(2)/2', '0', '-1', 'The limit does not exist.'];
+
+    return {
+        title: title,
+        image_url: base_url + image_path,
+        subtitle: subtitle,
+        answer: answer,
+        options: options
     }
 }
 
