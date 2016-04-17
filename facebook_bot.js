@@ -74,7 +74,7 @@ var QUESTIONS = {
             title: 'Solve for \'h\' above',
             subtitle: 'Select the best answer below:',
             image_path: 'images/calc_1.jpg',
-            options: ['1', 'sqrt(2)/2', '0', '-1', 'The limit does\'nt exist.'],
+            options: ['1', 'sqrt(2)/2', '0', '-1', 'The limit doesn\'t exist.'],
             payloads: ['A=>CALC=> 1', 'N=> sqrt(2)/2', 'N=> 0', 'N=> -1', 'N=> The limit doesn\'t exist.' ]
         },
         {
@@ -179,9 +179,6 @@ var Botkit = require('./lib/Botkit.js');
 var os = require('os');
 var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\nmath - Try some math quizzes.\nenglish - Try some english quizzes.";
 var difficulty = 'EASY';
-var numQuestions = 0;
-var numMissed = 0;
-var numCorrect = 0;
 
 var controller = Botkit.facebookbot({
     debug: true,
@@ -328,6 +325,10 @@ var nextQuestion = function(message, subject) {
     } )}, 1000);
 }
 
+var numQuestions = 0;
+var numMissed = 0;
+var numCorrect = 0;
+
 controller.on('facebook_postback', function(bot, message) {
     var answer = message.payload,
         subject;
@@ -335,12 +336,14 @@ controller.on('facebook_postback', function(bot, message) {
         case 'SUBJECT_AB_CALCULUS':
             bot.reply(message, 'Starting AB Calculus quiz!');
             message['subject'] = answer;
+            numQuestions = 1;
             launchQuiz(message, generateCalculusQuestion());
             break;
         case 'SUBJECT_HUMAN_GEO':
             bot.reply(message, 'Starting Human Geography quiz!');
             message['subject'] = answer;
             console.log(message);
+            numQuestions = 1;
             launchQuiz(message, generateHumanGeoQuestion());
             break;
         case 'SUBJECT_US_HISTORY':
@@ -357,11 +360,13 @@ controller.on('facebook_postback', function(bot, message) {
                 subject = 'SUBJECT_AB_CALCULUS';
             }
             bot.reply(message, 'That\'s right! ' + answer + ' is the answer.');
+            numCorrect++;
             nextQuestion(message, subject );
             break;
         case (answer.match(/^N=> /) || {}).input:
             answer = answer.replace('N=> ', '');
             bot.reply(message, 'Not quite. Try again.');
+            numMissed++;
             break;
         case 'NO_CLUE':
             bot.reply(message, 'No worries. We will come back to that one.');
@@ -369,13 +374,16 @@ controller.on('facebook_postback', function(bot, message) {
             break;
         case 'OPTIONS_NEXT_SUBJECT_AB_CALCULUS':
             bot.reply(message, 'Here\'s another one...');
+            numQuestions++;
             launchQuiz(message, generateCalculusQuestion());
+            break;
         case 'OPTIONS_NEXT_SUBJECT_HUMAN_GEO':
             bot.reply(message, 'Here\'s another one...');
+            numQuestions++;
             launchQuiz(message, generateHumanGeoQuestion());
             break;
         case 'OPTIONS_STOP':
-            bot.reply(message, 'Here\'s how you did:');
+            bot.reply(message, 'Nice! You got ' + numCorrect + ' out of ' + numQuestions + ' questions right!');
             break;
         default:
             bot.reply(message, 'Whoops! What happened?');
