@@ -176,16 +176,16 @@ var launchCalculusQuiz = function(message, question) {
     });
 
     // Overflow Options
-    bot.reply(message, {
+    setTimeout( function(){ bot.reply(message, {
         attachment: {
             'type': 'template',
             'payload': {
-                'text': 'More options...',
+                'text': 'more options...',
                 'template_type': 'button',
                 'buttons': buttons.slice(3)
             }
         }
-    });
+    } )}, 300);
 }
 
 controller.on('facebook_postback', function(bot, message) {
