@@ -72,13 +72,14 @@ if(!process.env.page_token || !process.env.verify_token) {
   var env = require('./env.js')
 }
 
+var os = require('os');
 var questions = require('./questions.js').questions;
 var Botkit = require('./lib/Botkit.js');
-var os = require('os');
-var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\nmath - Try some math quizzes.\nenglish - Try some english quizzes.";
-var difficulty = 'EASY';
 var base_url = 'http://nlaz.xyz/quizbot/';
-
+var numQuestions, numMissed, numCorrect = 0;
+var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\n" +
+    "math - Try some math quizzes.\n" +
+    "english - Try some english quizzes.";
 
 var controller = Botkit.facebookbot({
     debug: true,
@@ -94,7 +95,6 @@ controller.setupWebserver(process.env.port || 3000, function(err, webserver) {
         console.log('ONLINE!');
     });
 });
-
 
 controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
 
@@ -127,7 +127,7 @@ controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
 
 controller.hears(['stats', 'Stats'], 'message_received', function(bot, message) {
 
-  //TODO Add stats feature
+  //TODO - Add stats feature
   bot.reply(message, 'Whoops! I don`t have that feature yet');
 
 });
@@ -243,10 +243,6 @@ var nextQuestion = function(message, subject) {
     } )}, 1000);
 }
 
-var numQuestions = 0;
-var numMissed = 0;
-var numCorrect = 0;
-
 controller.on('facebook_postback', function(bot, message) {
     var answer = message.payload,
         subject;
@@ -347,13 +343,11 @@ controller.hears(['help', 'usage'], 'message_received', function(bot, message) {
 
 controller.hears(['math'], 'message_received', function(bot, message) {
     askMathQuestion = function(response, convo) {
-        var math = generateMath();
-        console.log(math);
+        var math = generateMathEquation();
         if (math) {
             convo.ask(math['question'], function(response, convo) {
               var answer = math['answer'];
               console.log(response.text + " =? " + answer);
-              console.log(response.text == answer);
               switch(response.text) {
                 case String(answer):
                   bot.reply(response,'Nice! That\'s right!');
@@ -472,33 +466,9 @@ controller.on('message_received', function(bot, message) {
     return false;
 });
 
-
-function generateMath() {
-    var ops = ['/','*','-','+'],
-        DIFFLIM = 12,
-        left, right, operator, equation;
-    switch (difficulty) {
-        case 'EASY':
-          DIFFLIM = 12;
-          break;
-        case 'HARD':
-          DIFFLIM = 24;
-          break;
-        default:
-          console.log("Oy vey");
-          return;
-    }
-
-    left = randomInt(1, DIFFLIM);
-    right = randomInt(1, DIFFLIM);
-    operator = ops[randomInt(0, ops.length)];
-    equation = left + operator + right;
-    console.log(equation);
-    return {
-        question: equation + "= ?",
-        answer: eval(equation)
-    }
-}
+/*
+ * Helper Functions
+ */
 
 function generateHumanGeoQuestion() {
   return generateQuestion('human_geo');
@@ -523,6 +493,22 @@ function generateQuestion(subject) {
       options: question['options'],
       payloads: question['payloads']
   }
+}
+
+function generateMathEquation() {
+    var ops = ['/','*','-','+'],
+        limit = 12,
+        left, right, operator, equation;
+
+    left = randomInt(1, limit);
+    right = randomInt(1, limit);
+    operator = ops[randomInt(0, ops.length)];
+    equation = left + operator + right;
+    console.log(equation);
+    return {
+        question: equation + "= ?",
+        answer: eval(equation)
+    }
 }
 
 function randomInt(xmin,xmax) { 
