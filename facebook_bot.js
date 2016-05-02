@@ -5,7 +5,7 @@
            \ \_____\  \ \_____\    \ \_\  \ \_\ \_\  \ \_\    \ \_\
             \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
 
-              QuizBot - A FB messenger chatbot built on BotKit
+              TutorBot - A FB messenger chatbot built on BotKit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
@@ -16,9 +16,9 @@ if(!process.env.page_token || !process.env.verify_token) {
 var os = require('os');
 var questions = require('./questions.js').questions;
 var Botkit = require('./lib/Botkit.js');
-var base_url = 'http://nlaz.xyz/quizbot/';
+var base_url = 'http://nlaz.xyz/tutorbot/';
 var numQuestions, numMissed, numCorrect = 0;
-var usage = "I'm Quizbot! Your quiz assistant. Here are my options:\n\n" +
+var usage = "I'm Tutorbot! Your testing assistant. Here are my options:\n\n" +
     "math - Try some math quizzes.\n" +
     "english - Try some english quizzes.";
 
@@ -45,7 +45,7 @@ controller.hears(['hello', 'hi'], 'message_received', function(bot, message) {
             'payload': { 
                 'template_type': 'generic',
                 'elements': [{
-                    'title': 'HI! I\'m QuizBot! Nice to meet you!',
+                    'title': 'HI! I\'m TutorBot! Nice to meet you!',
                     'image_url': base_url + 'images/bot.jpg',
                     'subtitle': 'Select \'Usage\' to see what I can do or \'Quiz\' to get started.',
                     'buttons': [
