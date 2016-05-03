@@ -9,9 +9,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-if(!process.env.page_token || !process.env.verify_token) {
-  var env = require('./env.js')
-}
+
+require('dotenv').config();
 
 var os = require('os');
 var questions = require('./questions.js').questions;
@@ -24,8 +23,8 @@ var usage = "I'm Tutorbot! Your testing assistant. Here are my options:\n\n" +
 
 var controller = Botkit.facebookbot({
     debug: true,
-    access_token: process.env.page_token,
-    verify_token: process.env.verify_token,
+    access_token: process.env.PAGE_TOKEN,
+    verify_token: process.env.VERIFY_TOKEN,
 });
 
 var bot = controller.spawn({
